@@ -1,0 +1,108 @@
+:root,
+html.light {
+  --bg: #eef3f8;
+  --bg-elevated: #f7faff;
+  --panel: #ffffff;
+  --panel-2: #f4f7fc;
+  --sidebar: #061a52;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+
+  --hero: linear-gradient(135deg, #1d2f78 0%, #223f9c 100%);
+  --hero-metric: rgba(255, 255, 255, 0.12);
+
+  --text: #10203a;
+  --text-soft: #6c7b98;
+  --text-on-dark: #f7fbff;
+
+  --border: #d9e2f1;
+  --border-strong: #c8d4e8;
+
+  --primary: #4f7cff;
+  --primary-2: #6a92ff;
+  --primary-text: #ffffff;
+
+  --success-bg: #dbf5e5;
+  --success-text: #1d9b53;
+
+  --warning-bg: #fff2d9;
+  --warning-text: #c98200;
+
+  --danger-bg: #ffe0e0;
+  --danger-text: #d64545;
+
+  --shadow-soft: 0 12px 30px rgba(16, 32, 58, 0.08);
+  --shadow-card: 0 12px 30px rgba(34, 63, 156, 0.08);
+
+  --tab-idle-bg: #ffffff;
+  --tab-idle-text: #304567;
+
+  --input-bg: #ffffff;
+  --input-text: #10203a;
+  --input-placeholder: #8b97ad;
+
+  --progress-track: #dde5f2;
+  --progress-fill: #4f7cff;
+
+  --guide-chip-bg: #dff5e8;
+  --guide-chip-text: #1d8e57;
+
+  --topbar-bg: #eef3f8;
+}
+
+html.dark {
+  --bg: #06101f;
+  --bg-elevated: #091529;
+  --panel: #0f1c33;
+  --panel-2: #132443;
+  --sidebar: #05102d;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+
+  --hero: linear-gradient(135deg, #1c2f75 0%, #2948a8 100%);
+  --hero-metric: rgba(255, 255, 255, 0.08);
+
+  --text: #f4f7fb;
+  --text-soft: #a8b6d1;
+  --text-on-dark: #f7fbff;
+
+  --border: rgba(197, 213, 242, 0.14);
+  --border-strong: rgba(197, 213, 242, 0.2);
+
+  --primary: #5b84ff;
+  --primary-2: #7b9dff;
+  --primary-text: #ffffff;
+
+  --success-bg: rgba(66, 184, 131, 0.16);
+  --success-text: #78e0a8;
+
+  --warning-bg: rgba(255, 184, 77, 0.16);
+  --warning-text: #ffcf70;
+
+  --danger-bg: rgba(255, 107, 107, 0.16);
+  --danger-text: #ff9c9c;
+
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.38);
+  --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.34);
+
+  --tab-idle-bg: #162645;
+  --tab-idle-text: #f3f7ff;
+
+  --input-bg: #132443;
+  --input-text: #f4f7fb;
+  --input-placeholder: #91a4c7;
+
+  --progress-track: #223456;
+  --progress-fill: #5b84ff;
+
+  --guide-chip-bg: rgba(73, 197, 133, 0.16);
+  --guide-chip-text: #8ef0b7;
+
+  --topbar-bg: #0b172d;
+}
+
+html,
+body,
+#root {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.25s ease, color 0.25s ease;
+}

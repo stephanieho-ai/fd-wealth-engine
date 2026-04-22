@@ -1,0 +1,32 @@
+export const DEFAULT_OFFERS = [
+  {
+    id: "OF001",
+    bank: "HLB",
+    productName: "12M eFD",
+    currency: "MYR",
+    tenureMonths: 12,
+    rate: 3.65,
+    minAmount: 5000,
+    note: "Standard sample",
+  },
+  {
+    id: "OF002",
+    bank: "CIMB",
+    productName: "6M Promo FD",
+    currency: "MYR",
+    tenureMonths: 6,
+    rate: 3.65,
+    minAmount: 10000,
+    note: "Promo sample",
+  },
+  {
+    id: "OF003",
+    bank: "PBB",
+    productName: "9M FD",
+    currency: "MYR",
+    tenureMonths: 9,
+    rate: 3.45,
+    minAmount: 1000,
+    note: "Sample offer",
+  },
+];
