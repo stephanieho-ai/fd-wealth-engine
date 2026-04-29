@@ -15,12 +15,14 @@ A desktop app designed to help you **track, plan, and optimize your Fixed Deposi
 ---
 
 # 🖥️ App Preview
+### 📊 Dashboard
+<img src="./assets/dashboard.png" width="900"/>
 
-![Dashboard](./assets/dashboard.png)
+### 📁 Records
+<img src="./assets/records.png" width="900"/>
 
-![Records](./assets/records.png)
-
-![Execution](./assets/execution.png)
+### ⚡ Execution Engine
+<img src="./assets/execution.png" width="900"/>
 
 ---
 
