@@ -13,16 +13,22 @@ A desktop app designed to help you **track, plan, and optimize your Fixed Deposi
 💡 No setup required — just download and run.
 
 ---
+## 🖥️ App Preview
 
-# 🖥️ App Preview
 ### 📊 Dashboard
-<img src="./assets/dashboard.png" width="900"/>
+<div align="center">
+  <img src="./assets/dashboard.png" width="1000"/>
+</div>
 
 ### 📁 Records
-<img src="./assets/records.png" width="900"/>
+<div align="center">
+  <img src="./assets/records.png" width="1000"/>
+</div>
 
 ### ⚡ Execution Engine
-<img src="./assets/execution.png" width="900"/>
+<div align="center">
+  <img src="./assets/execution.png" width="1000"/>
+</div>
 
 ---
 
