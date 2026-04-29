@@ -16,8 +16,6 @@ A desktop app designed to help you **track, plan, and optimize your Fixed Deposi
 
 # 🖥️ App Preview
 
-> *(Replace with your real screenshots later)*
-
 ![Dashboard](./assets/dashboard.png)
 
 ![Records](./assets/records.png)
