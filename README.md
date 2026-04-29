@@ -24,10 +24,6 @@ A desktop app designed to help you **track, plan, and optimize your Fixed Deposi
 ### ⚡ Execution Engine
 <img src="./assets/execution.png" width="900"/>
 
-<div align="center">
-  <img src="./assets/dashboard.png" width="900"/>
-</div>
-
 ---
 
 # ✨ Key Features
