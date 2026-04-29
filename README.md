@@ -36,12 +36,14 @@ A smart Fixed Deposit portfolio system to help you track, plan, and optimize you
 
 ---
 
-## ✨ Features
+### 🎯 What is this?
 
-- 📊 Track your Fixed Deposits  
-- 🗓 Plan maturity timelines  
-- 💡 Optimize interest strategy  
-- 🏦 Multi-bank support  
+FD Wealth Engine is a desktop app that helps you:
+
+✔ Track your Fixed Deposits  
+✔ Plan maturity ladder  
+✔ Optimize interest strategy  
+✔ Execute FD decisions like a private banker  
 
 ---
 
