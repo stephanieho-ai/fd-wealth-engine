@@ -5,9 +5,24 @@ A smart Fixed Deposit portfolio system to help you track, plan, and optimize you
 ---
 ## 🚀 Download
 
-👉 **Download FD Wealth Engine (Windows)**
+🔥 Direct Download:
 
-🔗 https://github.com/stephanieho-ai/fd-wealth-engine-updates/releases
+👉 https://github.com/stephanieho-ai/fd-wealth-engine-updates/releases/latest/download/FD.Wealth.Engine-Setup.exe
+
+---
+
+### 📦 Alternative (Manual)
+
+If download doesn't start:
+
+1. Go here:
+   👉 https://github.com/stephanieho-ai/fd-wealth-engine-updates/releases
+
+2. Scroll to **Assets**
+
+3. Click:
+
+👉 **FD.Wealth.Engine-Setup.exe**
 
 ---
 
