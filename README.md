@@ -1,132 +1,87 @@
 # 💰 FD Wealth Engine
 
-### 🏦 Private Banking Console for Fixed Deposit Investors
-
-A desktop app designed to help you **track, plan, and optimize your Fixed Deposit portfolio** with clarity and precision.
+**Private Banking Console for Fixed Deposit Portfolio Management**
 
 ---
 
-# 🚀 Download (Windows)
+## 🏦 Overview
 
-👉 **[Download Latest Version](https://github.com/stephanieho-ai/fd-wealth-engine-updates/releases/latest/download/FD.Wealth.Engine-Setup.exe)**
+FD Wealth Engine is a desktop-based financial management system designed to transform traditional Fixed Deposit (FD) tracking into a structured, intelligent portfolio system.
 
-💡 No setup required — just download and run.
-
----
-## 🖥️ App Preview
-
-### 📊 Dashboard
-<div align="center">
-  <img src="./assets/dashboard.png" width="1000"/>
-</div>
-
-### 📁 Records
-<div align="center">
-  <img src="./assets/records.png" width="1000"/>
-</div>
-
-### ⚡ Execution Engine
-<div align="center">
-  <img src="./assets/execution.png" width="1000"/>
-</div>
+It enables users to manage, plan, and execute FD ladder strategies with clarity — similar to tools used in private banking environments.
 
 ---
 
-# ✨ Key Features
+## ✨ Key Features
 
 ### 📊 Portfolio Dashboard
-
-* View all your FD in one place
-* Track maturity timeline
-* Monitor interest performance
-
----
-
-### 🧾 Records Management
-
-* Add / Edit / Close FD
-* Support Savings & Parking Cash
-* Auto ID generation (FD001, FD002…)
+- Total FD portfolio overview
+- Savings & Parking Cash tracking
+- Deployable funds visibility
+- Monthly maturity insights
 
 ---
 
-### 🧠 Smart FD Advisor (In Progress)
-
-* Detect ladder gaps
-* Suggest optimal placement
-* Highlight strong / weak months
-
----
-
-### ⚡ Execution Engine (V32 – Coming)
-
-* One-click FD record generation
-* Auto-select best bank offers
-* Auto-fill start date & maturity date
-* Convert plan → execution
-
-🚧 Currently under active development
+### ⚙️ Execution Engine (V32)
+- Generate **Execution Plan**
+- Confirm before execution
+- Auto-create FD records
+- Smart fund deduction from:
+  - Savings
+  - Parking Cash
 
 ---
 
-### 🌍 Multi-Currency Ready
-
-* MYR, USD, SGD, EUR and more
-
----
-
-# 📦 How to Install
-
-1. Click the download link above
-2. Open the `.exe` file
-3. If Windows shows warning:
-   → Click **More Info → Run anyway**
-4. Done 🎉
+### 🧠 Ladder Planning System
+- Target month optimization
+- Weak month detection
+- Execution timing suggestions
+- Partial build strategy
 
 ---
 
-# 🧠 Why FD Wealth Engine?
-
-Most people:
-
-* Track FD in Excel ❌
-* Miss maturity timing ❌
-* Don’t optimize interest ❌
-
-FD Wealth Engine helps you:
-
-* Think like a banker
-* Plan systematically
-* Execute with clarity
+### 💼 Record Management
+- Add / Edit / Delete FD
+- Close & Rollover actions
+- Auto-generated FD entries
+- Clean separation:
+  - FD
+  - Savings
+  - Parking Cash
 
 ---
 
-# 🔥 Latest Version
-
-👉 Always download from:
-https://github.com/stephanieho-ai/fd-wealth-engine-updates/releases
-
----
-
-# 🛠️ Tech Stack
-
-* React
-* Vite
-* Electron
+### 🔔 Smart Workflow
+- Execution confirmation modal
+- Auto status tracking
+- Real-time portfolio updates
 
 ---
 
-# 👩‍💻 For Developers
+## 🖥️ Screenshots
+
+### Dashboard
+![Dashboard](assets/dashboard.png)
+
+### Execution Plan
+![Execution](assets/execution.png)
+
+### Records Management
+![Records](assets/records.png)
+
+---
+
+## ⚙️ Tech Stack
+
+- **Frontend:** React + Vite
+- **Desktop App:** Electron
+- **State Management:** React Hooks
+- **Storage:** LocalStorage
+
+---
+
+## 🚀 Getting Started
 
 ```bash
 npm install
 npm run dev
-```
-
----
-
-# 💬 About
-
-Built as a **personal wealth system** evolving into a **private banking execution tool**.
-
----
