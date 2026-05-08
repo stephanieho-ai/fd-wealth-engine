@@ -1,3 +1,5 @@
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import { useMemo, useState } from "react";
 
 const OFFERS_STORAGE_KEY = "fdOffers";
@@ -250,7 +252,7 @@ const exportAuditCSV = () => {
   setTimeout(() => setToastMessage(""), 3000);
 };
 
-const clearTestAuditLog = () => {
+  const clearTestAuditLog = () => {
   const confirmClear = window.confirm(
     "Clear audit history only? FD records will NOT be deleted."
   );
@@ -264,8 +266,146 @@ const clearTestAuditLog = () => {
   setTimeout(() => setToastMessage(""), 3000);
 };
 
-const printAuditReport = () => {
-  window.print();
+  const printAuditReport = () => {
+    window.print();
+  };
+
+  const exportBankerAuditPdf = () => {
+  const doc = new jsPDF("p", "mm", "a4");
+
+  const now = new Date().toLocaleString();
+  const exportDate = new Date().toISOString().slice(0, 10);
+
+  // =========================
+  // Banker Header
+  // =========================
+  doc.setFillColor(18, 31, 58);
+  doc.rect(0, 0, 210, 28, "F");
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16);
+  doc.text("FD Wealth Engine", 14, 12);
+
+  doc.setFontSize(9);
+  doc.text("Private Banking Console", 14, 19);
+  doc.text("Banker Audit Report", 14, 24);
+
+  doc.setTextColor(0, 0, 0);
+
+  // =========================
+  // Report Info
+  // =========================
+  doc.setFontSize(9);
+  doc.text(`Exported: ${now}`, 14, 38);
+  doc.text(`Base Currency: ${currency}`, 14, 44);
+  doc.text("Report Status: Internal Review Copy", 14, 50);
+
+  // =========================
+  // Watermark
+  // =========================
+  doc.setTextColor(235, 235, 235);
+  doc.setFontSize(34);
+  doc.text("FD WEALTH ENGINE", 32, 145, { angle: 35 });
+  doc.setTextColor(0, 0, 0);
+
+  // =========================
+  // Portfolio Summary Box
+  // =========================
+  doc.setFillColor(245, 247, 252);
+  doc.roundedRect(14, 60, 182, 28, 3, 3, "F");
+
+  doc.setFontSize(11);
+  doc.text("Portfolio Summary", 20, 70);
+
+  doc.setFontSize(9);
+  doc.text(`Active Portfolio: ${formatMoney(totalActivePortfolio, currency)}`, 20, 78);
+  doc.text(`Fixed Deposits: ${formatMoney(totalFixedDeposits, currency)}`, 20, 84);
+
+  doc.text(`Savings: ${formatMoney(totalSavings, currency)}`, 105, 78);
+  doc.text(`Parking Cash: ${formatMoney(totalParkingCash, currency)}`, 105, 84);
+
+  // =========================
+  // Audit Summary Box
+  // =========================
+  doc.setFillColor(250, 250, 250);
+  doc.roundedRect(14, 96, 182, 28, 3, 3, "F");
+
+  doc.setFontSize(11);
+  doc.text("Audit Summary", 20, 106);
+
+  doc.setFontSize(9);
+  doc.text(`Total Audit Events: ${filteredAuditTrail.length}`, 20, 114);
+  doc.text("System Layer: Execution History + Audit Trail", 20, 120);
+
+  doc.text("Export Type: Banker PDF Export", 105, 114);
+  doc.text("Generated From: LocalStorage Audit Layer", 105, 120);
+
+  // =========================
+  // Audit Table
+  // =========================
+  const rows = filteredAuditTrail.map((item, index) => [
+    index + 1,
+    item.type || "-",
+    item.batchId || "-",
+
+    item.totalAmount
+      ? formatMoney(item.totalAmount, currency)
+      : item.refundAmount
+      ? formatMoney(item.refundAmount, currency)
+      : "-",
+
+    item.createdAt
+      ? new Date(item.createdAt).toLocaleString()
+      : "-"
+  ]);
+
+  doc.setFontSize(11);
+  doc.text("Execution Audit Records", 14, 137);
+
+  autoTable(doc, {
+    startY: 142,
+    head: [["No.", "Type", "Batch ID", "Amount", "Timestamp"]],
+    body: rows,
+    styles: {
+      fontSize: 8,
+      cellPadding: 2,
+    },
+    headStyles: {
+      fillColor: [18, 31, 58],
+      textColor: 255,
+    },
+    alternateRowStyles: {
+      fillColor: [248, 250, 252],
+    },
+  });
+
+  const finalY = doc.lastAutoTable.finalY || 170;
+
+  // =========================
+  // Compliance + Signature
+  // =========================
+  doc.setFontSize(9);
+  doc.text("Compliance Note:", 14, finalY + 14);
+
+  doc.text(
+    "This report is generated from the FD Wealth Engine local audit layer for personal portfolio tracking, execution review, and internal record keeping.",
+    14,
+    finalY + 20,
+    { maxWidth: 180 }
+  );
+
+  doc.text("Prepared By: __________________________", 14, finalY + 38);
+  doc.text("Reviewed By: _________________________", 14, finalY + 50);
+
+  doc.setFontSize(8);
+  doc.setTextColor(120, 120, 120);
+  doc.text(
+    "FD Wealth Engine · Private Banking Console · Generated locally from browser storage",
+    14,
+    286
+  );
+
+  doc.save(`FD-Wealth-Engine-Banker-Report-${exportDate}.pdf`);
 };
 
   const safeRecords = Array.isArray(records) ? records : [];
@@ -333,6 +473,13 @@ const deployableSavings = Math.max(
 );
 
 const totalDeployableFunds = deployableSavings + totalParkingCash;
+
+const capitalSignal =
+  totalDeployableFunds >= 5000
+    ? "moderate"
+    : totalDeployableFunds > 0
+    ? "healthy"
+    : "neutral";
  
   const totalActivePortfolio =
     totalFixedDeposits + totalSavings + totalParkingCash;
@@ -1204,8 +1351,253 @@ Maintain structure and optimize future placements using latest rates.${execution
             </div>
           </div>
 
-          <div className="dashboard-two-col">
-            <section className="bank-panel advisor-focus">
+         {/* =============================
+            V33.0-A CAPITAL ENGINE PANEL
+          ============================= */}
+          <section className="bank-panel" style={{ marginTop: 24, marginBottom: 24 }}>
+        <div className="bank-panel-head">
+          <div>
+            <div className="panel-kicker">V33 CAPITAL INTELLIGENCE</div>
+            <h3>Capital Engine</h3>
+          </div>
+
+          <small>Liquidity · Deployment · Idle Cash</small>
+        </div>
+
+        {/* V33 Reserve Control */}
+        <div
+          style={{
+            marginTop: 18,
+            marginBottom: 18,
+            display: "grid",
+            gridTemplateColumns: "1fr 220px",
+            gap: 16,
+            alignItems: "end",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                marginBottom: 6,
+                color: "#6b7a99",
+              }}
+            >
+              Reserve Amount ({currency})
+            </div>
+
+            <div
+              style={{
+                fontSize: 13,
+                color: "#7b87a8",
+              }}
+            >
+              Protected liquidity that should NOT be deployed into FD.
+            </div>
+          </div>
+
+          <div>
+            <input
+              className="input"
+              type="number"
+              min="0"
+              step="1000"
+              value={reserveAmount}
+              onChange={(e) => setReserveAmount(e.target.value)}
+              placeholder="Example: 20000"
+            />
+          </div>
+        </div>
+
+            <div className="dashboard-metrics-grid dashboard-summary-grid">
+              <div className="metric-box summary-card dashboard-stat-card">
+                <span>TOTAL CAPITAL</span>
+                <strong className="metric-value">
+                  {formatMoney(totalActivePortfolio, currency)}
+                </strong>
+                <small>FD + Savings + Parking Cash</small>
+              </div>
+
+              <div className="metric-box summary-card dashboard-stat-card">
+                <span>LOCKED FD CAPITAL</span>
+                <strong className="metric-value">
+                  {formatMoney(totalFixedDeposits, currency)}
+                </strong>
+                <small>Currently locked in FD</small>
+              </div>
+
+              <div className="metric-box summary-card dashboard-stat-card">
+                <span>DEPLOYABLE NOW</span>
+                <strong className="metric-value">
+                  {formatMoney(totalDeployableFunds, currency)}
+                </strong>
+                <small>Savings after reserve + Parking Cash</small>
+              </div>
+
+              <div className="metric-box summary-card dashboard-stat-card">
+                <span>WITH UPCOMING FD</span>
+                <strong className="metric-value">
+                  {formatMoney(totalDeployableWithUpcoming, currency)}
+                </strong>
+                <small>Deployable + next maturity</small>
+              </div>
+            </div>
+
+          <div
+  className={`signal-card ${
+  capitalSignal === "moderate"
+    ? "tone-orange"
+    : capitalSignal === "healthy"
+    ? "tone-green"
+    : "tone-blue"
+}`}
+  style={{ marginTop: 18 }}
+>
+  <h4>Capital Intelligence</h4>
+
+  <p
+  style={{
+    color:
+      capitalSignal === "moderate"
+        ? "#ea580c"
+        : capitalSignal === "healthy"
+        ? "#16a34a"
+        : "#64748b",
+    fontWeight: 600,
+  }}
+>
+    {totalDeployableFunds > 20000
+      ? `🔴 Excess idle capital detected: ${formatMoney(
+          totalDeployableFunds,
+          currency
+        )}. Consider deploying capital into FD ladder.`
+
+      : totalDeployableFunds >= 5000
+      ? `🟠 Moderate idle cash detected: ${formatMoney(
+          totalDeployableFunds,
+          currency
+        )}. Monitor upcoming FD opportunities.`
+
+      : totalDeployableFunds > 0
+      ? `🟢 Healthy liquidity level: ${formatMoney(
+          totalDeployableFunds,
+          currency
+        )}.`
+
+      : "No deployable capital detected yet."}
+  </p>
+</div>
+                             
+<div className="signal-card tone-blue" style={{ marginTop: 18 }}>
+  <h4>Suggested Capital Action</h4>
+<p
+  style={{
+    color: "#2563eb",
+    fontWeight: 600,
+  }}
+>
+  {nextTargetMonth
+    ? `👉 Target weak month: ${nextTargetMonth.month}. Gap detected: ${formatMoney(
+        nextTargetMonth.gap,
+        currency
+      )}.`
+    : "No weak target month detected yet. Your ladder may be covered or target is not set."}
+</p> 
+</div>
+{/* =============================
+   V33.0-D CAPITAL ALLOCATION
+============================= */}
+<div
+  className="dashboard-metrics-grid dashboard-summary-grid"
+  style={{ marginTop: 18 }}
+>
+  <div className="metric-box summary-card dashboard-stat-card">
+    <span>FD ALLOCATION</span>
+    <strong className="metric-value">
+      {totalActivePortfolio > 0
+        ? `${Math.round((totalFixedDeposits / totalActivePortfolio) * 100)}%`
+        : "0%"}
+    </strong>
+    <small>Capital locked in FD</small>
+  </div>
+
+  <div className="metric-box summary-card dashboard-stat-card">
+    <span>LIQUIDITY RATIO</span>
+    <strong className="metric-value">
+      {totalActivePortfolio > 0
+        ? `${Math.round((totalDeployableFunds / totalActivePortfolio) * 100)}%`
+        : "0%"}
+    </strong>
+    <small>Immediately deployable</small>
+  </div>
+
+  <div className="metric-box summary-card dashboard-stat-card">
+    <span>RESERVE PROTECTION</span>
+    <strong className="metric-value">
+      {totalActivePortfolio > 0
+        ? `${Math.round((Number(reserveAmount || 0) / totalActivePortfolio) * 100)}%`
+        : "0%"}
+    </strong>
+    <small>Protected liquidity buffer</small>
+  </div>
+
+  <div className="metric-box summary-card dashboard-stat-card">
+    <span>CAPITAL DISTRIBUTION</span>
+    <strong className="metric-value">
+      {totalDeployableFunds > totalFixedDeposits ? "LIQUID" : "BALANCED"}
+    </strong>
+    <small>
+      {totalDeployableFunds > totalFixedDeposits
+        ? "Cash-heavy structure"
+        : "FD-focused structure"}
+    </small>
+  </div>
+</div>
+
+{/* =============================
+   V33.0-E CAPITAL RISK MONITOR
+============================= */}
+<div
+  className={`signal-card ${
+    totalActivePortfolio > 0 &&
+    (totalFixedDeposits / totalActivePortfolio > 0.9 ||
+      totalDeployableFunds / totalActivePortfolio < 0.05)
+      ? "tone-orange"
+      : "tone-green"
+  }`}
+  style={{ marginTop: 18 }}
+>
+<h4>Capital Risk Monitor</h4>
+
+<p
+  style={{
+    color:
+      Number(reserveAmount || 0) > totalSavings ||
+      totalFixedDeposits / totalActivePortfolio > 0.9 ||
+      totalDeployableFunds / totalActivePortfolio < 0.05
+        ? "#dc2626"
+        : "#16a34a",
+    fontWeight: 600,
+  }}
+>
+  {totalActivePortfolio <= 0 
+      ? "No portfolio data available yet."
+      : Number(reserveAmount || 0) > totalSavings
+      ? "⚠ Reserve amount is higher than total Savings. Deployable capital is fully protected."
+      : totalFixedDeposits / totalActivePortfolio > 0.9
+      ? "⚠ FD concentration is above 90%. Portfolio is highly FD-focused."
+      : totalDeployableFunds / totalActivePortfolio < 0.05
+      ? "⚠ Liquidity ratio is below 5%. Available deployable cash is low."
+      : "✅ Capital structure looks balanced. FD allocation, liquidity, and reserve protection are within a healthy range."}
+  </p>
+</div>
+
+</section>
+
+<div className="dashboard-two-col">
+
+  <section className="bank-panel advisor-focus">
   <div className="bank-panel-head">
     <div>
       <div className="panel-kicker">AI ADVISOR FOCUS</div>
@@ -1367,6 +1759,7 @@ Maintain structure and optimize future placements using latest rates.${execution
     </button>
   </div>
 </section>
+</div>
 {/* ✅ V32.2 EXECUTION HISTORY */}
 <section className="bank-panel" style={{ marginTop: 24 }}>
 <div className="bank-panel-head">
@@ -1390,6 +1783,13 @@ Maintain structure and optimize future placements using latest rates.${execution
       onClick={exportAuditCSV}
     >
       Export CSV
+    </button>
+
+    <button
+      className="btn-secondary"
+      onClick={exportBankerAuditPdf}
+    >
+      Export Banker PDF
     </button>
 
     <button
@@ -1434,20 +1834,25 @@ Maintain structure and optimize future placements using latest rates.${execution
       visibleAuditTrail.map((item, index) => (
       <div
         key={item.id}
-        className={`projection-card ${index === 0 ? "latest-audit-card" : ""}`}
+        className={`projection-card audit-event-card ${
+          index === 0 ? "latest-audit-card" : ""
+        } ${
+          item.type === "UNDO" ? "audit-undo-card" : "audit-execute-card"
+        }`}
 >
-      <div className="projection-month">
-        {item.type === "UNDO"
-              ? "↩ Undo Execution"
-              : "✅ Execute"}
+          <div className="projection-month">
+            {item.type === "UNDO"
+                  ? "↩ Undo Execution"
+                  : "✅ Execute"}
+              </div>
+
+          <div className="audit-meta-row">
+            <span className="audit-batch-badge">
+              Batch ID: {item.batchId}
+            </span>
           </div>
 
-          <div className="projection-note">
-            Batch ID: {item.batchId}
-          </div>
-
-          <div className="projection-note">
-            Time:{" "}
+          <div className="audit-time">
             {new Date(item.createdAt).toLocaleString()}
           </div>
 
@@ -1494,9 +1899,8 @@ Maintain structure and optimize future placements using latest rates.${execution
     {showAllAudit ? "Show Less" : "Show More"}
   </button>
 )} 
-  </div>
-</section>
-</div>          
+</div>
+</section>       
         </>
       )}
 

@@ -34,18 +34,25 @@ function Sidebar({ tabs, activeTab, onTabChange, currency, totalActivePortfolio 
         ))}
       </nav>
 
-      <div className="sidebar-footer-cards">
-        <div className="sidebar-mini-card">
-          <span>BASE CURRENCY</span>
-          <strong>{currency}</strong>
-        </div>
-        <div className="sidebar-mini-card">
-          <span>ACTIVE PORTFOLIO</span>
-          <strong>
-            {currency} {Number(totalActivePortfolio || 0).toLocaleString()}
-          </strong>
-        </div>
-      </div>
+     <div className="sidebar-footer-cards">
+  <div className="sidebar-mini-card">
+    <span>BASE CURRENCY</span>
+    <strong>{currency}</strong>
+  </div>
+
+  <div className="sidebar-mini-card">
+    <span>ACTIVE PORTFOLIO</span>
+    <strong>
+      {currency} {Number(totalActivePortfolio || 0).toLocaleString()}
+    </strong>
+  </div>
+
+  <div className="sidebar-mini-card version-card">
+    <span>SYSTEM VERSION</span>
+    <strong>V32.4 FINAL RELEASE</strong>
+  </div>
+</div>
+
     </aside>
   );
 }
@@ -54,7 +61,7 @@ function TopBar({ title, currency }) {
   return (
     <header className="topbar">
       <div>
-        <div className="topbar-version">FD ADVISOR V28.9</div>
+        <div className="topbar-version">FD WEALTH ENGINE · V32.4 FINAL RELEASE</div>
         <h1 className="topbar-title">{title}</h1>
       </div>
 
@@ -152,7 +159,6 @@ export default function AppShell({
       );
       break;
   }
-
   return (
     <div className="app-shell">
       <Sidebar
@@ -165,7 +171,20 @@ export default function AppShell({
 
       <div className="shell-main">
         <TopBar title={pageTitle} currency={currency} />
-        <div className="shell-content">{page}</div>
+
+        <div className="shell-content">
+          {page}
+
+          <footer className="system-footer">
+            <div>FD Wealth Engine · Private Banking Console</div>
+
+            <div>
+              V32.4 FINAL RELEASE · Built with React + Electron
+            </div>
+          </footer>
+        </div>
       </div>
     </div>
-  )}
+  );
+}
+  
