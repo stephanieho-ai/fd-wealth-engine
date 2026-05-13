@@ -1,3 +1,5 @@
+import "../../styles/dashboard/execution-panel.css";
+
 export default function ExecutionPanel({
   currency = "MYR",
   upcomingMaturityAmount = 0,

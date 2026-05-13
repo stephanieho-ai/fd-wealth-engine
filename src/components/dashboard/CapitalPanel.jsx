@@ -1,3 +1,5 @@
+import "../../styles/dashboard/capital-panel.css";
+
 function safeNumber(value) {
   const number = Number(value || 0);
   return Number.isFinite(number) ? number : 0;

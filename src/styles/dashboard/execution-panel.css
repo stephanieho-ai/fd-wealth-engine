@@ -1,0 +1,26 @@
+.execution-snapshot-card {
+  padding: 18px;
+  border-left-width: 4px;
+  border-left-style: solid;
+  background: var(--panel);
+}
+
+.execution-snapshot-card h4 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.execution-snapshot-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.execution-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: var(--shadow-soft);
+}

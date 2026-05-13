@@ -1,0 +1,80 @@
+/* ================================
+   V32.4-F1 Audit UI Polish
+================================ */
+
+.audit-event-card {
+  position: relative;
+  border-radius: 24px;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(120, 150, 210, 0.25);
+}
+
+.audit-event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+}
+
+.audit-event-card::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 22px;
+  bottom: 22px;
+  width: 4px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.45);
+}
+
+.audit-event-card .projection-month,
+.audit-event-card .projection-note,
+.audit-event-card .audit-time,
+.audit-event-card .audit-meta-row {
+  padding-left: 20px;
+}
+
+.audit-execute-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f4f8ff 100%);
+  border-color: rgba(37, 99, 235, 0.25);
+}
+
+.audit-execute-card::before {
+  background: linear-gradient(180deg, #2563eb, #22c55e);
+}
+
+.audit-undo-card {
+  background: linear-gradient(135deg, #fffaf5 0%, #fff7ed 100%);
+  border-color: rgba(249, 115, 22, 0.28);
+}
+
+.audit-undo-card::before {
+  background: linear-gradient(180deg, #f97316, #facc15);
+}
+
+.latest-audit-card {
+  box-shadow: 0 20px 42px rgba(37, 99, 235, 0.18);
+}
+
+.audit-batch-badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.audit-time {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.audit-meta-row {
+  margin-top: 10px;
+  margin-bottom: 8px;
+}

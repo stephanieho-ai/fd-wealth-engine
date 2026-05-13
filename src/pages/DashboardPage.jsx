@@ -426,30 +426,30 @@ export default function DashboardPage({
       />
 
       <div className="dashboard-main-grid">
-        <div className="dashboard-main-side">
-          <AdvisorPanel
-            currency={currency}
-            targetMonth={nextTargetMonth?.month || "-"}
-            weakMonth={weakestMonth?.month || "-"}
-            deployable={totalDeployableWithUpcoming}
-            bestOffer={bestOffer}
-          />
+  <div className="dashboard-main-side">
+    <AdvisorPanel
+      currency={currency}
+      targetMonth={nextTargetMonth?.month || "-"}
+      weakMonth={weakestMonth?.month || "-"}
+      deployable={totalDeployableWithUpcoming}
+      bestOffer={bestOffer}
+    />
 
-          <MaturityAlerts
-            records={safeRecords}
-            currency={currency}
-          />
+    <MaturityAlerts
+      records={safeRecords}
+      currency={currency}
+    />
 
-          <ExecutionPanel
-            currency={currency}
-            upcomingMaturityAmount={upcomingMaturityAmount}
-            idleCash={idleCash}
-            onUndoExecution={handleUndoExecution}
-          />
+    <ExecutionPanel
+      currency={currency}
+      upcomingMaturityAmount={upcomingMaturityAmount}
+      idleCash={idleCash}
+      onUndoExecution={handleUndoExecution}
+    />
+  </div>
 
-          <AuditTrail />
-        </div>
-      </div>
-    </main>
+  <AuditTrail />
+</div>
+</main>
   );
 }

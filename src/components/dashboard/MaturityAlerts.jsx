@@ -1,3 +1,5 @@
+import "../../styles/dashboard/maturity-alerts.css";
+
 function getAmount(record) {
   return Number(record?.principal ?? record?.amount ?? 0);
 }

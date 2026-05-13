@@ -1,3 +1,4 @@
+import "../../styles/dashboard/audit-trail.css";
 import { useMemo, useState } from "react";
 
 const AUDIT_STORAGE_KEY = "fd_execution_history";

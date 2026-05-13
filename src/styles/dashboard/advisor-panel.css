@@ -1,0 +1,29 @@
+.advisor-box {
+  background: #f8fafc;
+  border-radius: 22px;
+  padding: 22px;
+  line-height: 1.7;
+}
+
+.filter-row {
+  display: flex;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.filter-row button,
+.secondary-button {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: #eef2ff;
+  color: #17326d;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filter-row button.active,
+.secondary-button:hover {
+  background: #2563eb;
+  color: #ffffff;
+}

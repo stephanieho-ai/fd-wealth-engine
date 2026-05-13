@@ -1,0 +1,92 @@
+
+/* =========================
+   Alerts / notification center
+   ========================= */
+
+.alerts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.notification-center,
+.maturity-monitoring,
+.alerts-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.alert-box,
+.notification-card,
+.maturity-box {
+  padding: 18px;
+}
+
+.alert-box-head,
+.notification-card-head,
+.maturity-box-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.alert-box-head span,
+.notification-card-head span,
+.maturity-box-head span {
+  background: #f5f7fb;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.alert-record,
+.notification-item,
+.alert-item {
+  border-radius: 18px;
+  padding: 16px;
+  background: #f8fbff;
+  border: 1px solid var(--line);
+}
+
+.alert-record.overdue,
+.notification-item.overdue,
+.alert-item.overdue {
+  background: #fff4f4;
+}
+
+.alert-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.pill.overdue,
+.overdue-badge {
+  background: #ffd8d8;
+  color: #d82424;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 900;
+  border: 1px solid rgba(216, 36, 36, 0.15);
+}
+
+.alert-empty,
+.notification-card .empty,
+.alert-box .empty,
+.maturity-box .empty {
+  min-height: 120px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 18px;
+  background: #fafcff;
+}

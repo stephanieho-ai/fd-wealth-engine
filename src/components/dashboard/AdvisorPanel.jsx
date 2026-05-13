@@ -1,3 +1,5 @@
+import "../../styles/dashboard/advisor-panel.css";
+
 export default function AdvisorPanel({
   currency = "MYR",
   targetMonth = "-",
