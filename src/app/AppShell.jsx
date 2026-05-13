@@ -155,6 +155,7 @@ export default function AppShell({
           {...sharedPageProps}
           onUpdateRecord={onUpdateRecord}
           onDeleteRecord={onDeleteRecord}
+          onUndoExecution={onUndoExecution}
         />
       );
       break;

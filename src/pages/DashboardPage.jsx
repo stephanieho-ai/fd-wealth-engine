@@ -336,6 +336,20 @@ export default function DashboardPage({
     }).length;
   }, [activeFDRecords]);
 
+  const handleExecuteDeployment = () => {
+  if (idleCash <= 0) {
+    setToastMessage("No deployable capital available.");
+  } else {
+    setToastMessage(
+      `Execution ready: ${formatMoney(idleCash, currency)} available for deployment.`
+    );
+  }
+
+  setTimeout(() => {
+    setToastMessage("");
+  }, 3000);
+};
+
   const handleUndoExecution = () => {
     if (typeof onUndoExecution === "function") {
       onUndoExecution();
@@ -440,13 +454,11 @@ export default function DashboardPage({
       currency={currency}
     />
 
-    <ExecutionPanel
+  <ExecutionPanel
     currency={currency}
     upcomingMaturityAmount={upcomingMaturityAmount}
     idleCash={idleCash}
-    onExecute={() => {
-      setToastMessage("Execution engine coming next.");
-    }}
+    onExecute={handleExecuteDeployment}
     onUndoExecution={handleUndoExecution}
   />
   </div>
