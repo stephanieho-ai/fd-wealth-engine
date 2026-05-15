@@ -23,6 +23,10 @@
   border-radius: 28px;
   padding: 28px;
   box-shadow: var(--shadow-soft);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .primary-button {

@@ -57,7 +57,27 @@
 .alert-record.overdue,
 .notification-item.overdue,
 .alert-item.overdue {
-  background: #fff4f4;
+  background: linear-gradient(
+    135deg,
+    #fff1f1 0%,
+    #ffe4e4 100%
+  );
+
+  border: 1px solid rgba(239, 68, 68, 0.18);
+
+  border-left: 4px solid #ef4444;
+
+  box-shadow: 0 10px 24px rgba(239, 68, 68, 0.08);
+}
+
+/* =========================
+   OVERDUE TEXT
+========================= */
+
+.alert-record.overdue strong,
+.notification-item.overdue strong,
+.alert-item.overdue strong {
+  color: #dc2626;
 }
 
 .alert-row {
@@ -89,4 +109,43 @@
   border: 1px dashed var(--line);
   border-radius: 18px;
   background: #fafcff;
+}
+
+/* =========================
+   MATURITY OVERDUE CRITICAL OVERRIDE
+========================= */
+
+.maturity-panel .projection-card,
+.maturity-panel .alert-item,
+.maturity-panel .alert-record {
+  position: relative;
+}
+
+.maturity-panel .projection-card:has(.overdue),
+.maturity-panel .alert-item.overdue,
+.maturity-panel .alert-record.overdue {
+  background: linear-gradient(135deg, #fff1f1 0%, #ffe4e4 100%) !important;
+  border: 1px solid rgba(239, 68, 68, 0.28) !important;
+  border-left: 5px solid #ef4444 !important;
+  box-shadow: 0 12px 26px rgba(239, 68, 68, 0.12) !important;
+}
+
+.maturity-panel .projection-card:has(.overdue) strong,
+.maturity-panel .projection-card:has(.overdue) span,
+.maturity-panel .projection-card:has(.overdue) h3,
+.maturity-panel .projection-card:has(.overdue) p,
+.maturity-panel .overdue {
+  color: #dc2626 !important;
+}
+
+.projection-card.overdue-card {
+  background: linear-gradient(135deg, #fff1f1 0%, #ffe4e4 100%) !important;
+  border: 1px solid rgba(239, 68, 68, 0.28) !important;
+  border-left: 5px solid #ef4444 !important;
+  box-shadow: 0 12px 26px rgba(239, 68, 68, 0.12) !important;
+}
+
+.projection-card.overdue-card span,
+.projection-card.overdue-card strong {
+  color: #dc2626 !important;
 }

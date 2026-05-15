@@ -21,6 +21,8 @@ export default function CapitalPanel({
   formatMoney,
   totalActivePortfolio = 0,
   totalFixedDeposits = 0,
+  totalSavings = 0,
+  totalParkingCash = 0,
   totalDeployableFunds = 0,
   totalDeployableWithUpcoming = 0,
   capitalSignal = "neutral",
@@ -67,7 +69,7 @@ export default function CapitalPanel({
         </div>
 
         <div className="score-card">
-          <span>Capital Health</span>
+          <span>Risk Monitor</span>
           <strong>{healthScore}/100</strong>
           <small>{healthLabel}</small>
         </div>
@@ -81,25 +83,38 @@ export default function CapitalPanel({
         </div>
 
         <div className="summary-card">
+          <span>Savings</span>
+          <strong>{formatMoney(totalSavings, currency)}</strong>
+          <small>Available bank savings</small>
+        </div>
+
+        <div className="summary-card">
+          <span>Parking Cash</span>
+          <strong>{formatMoney(totalParkingCash, currency)}</strong>
+          <small>Short-term reserve cash</small>
+        </div>
+
+        <div className="summary-card">
           <span>Locked FD Capital</span>
           <strong>{formatMoney(totalFixedDeposits, currency)}</strong>
           <small>Currently placed in FD</small>
         </div>
+      </div>
 
-        <div className="summary-card">
+      <div className="capital-grid">
+        {/* Row 1: Liquidity Layer */}
+        <div className="projection-card">
+          <span>Liquidity Buffer</span>
+          <strong>{formatMoney(liquidityBuffer, currency)}</strong>
+          <small>Reserve and flexible cash layer</small>
+        </div>
+
+        <div className="projection-card">
           <span>Deployable Now</span>
           <strong>{formatMoney(totalDeployableFunds, currency)}</strong>
           <small>Available after reserve</small>
         </div>
 
-        <div className="summary-card">
-          <span>With Upcoming FD</span>
-          <strong>{formatMoney(totalDeployableWithUpcoming, currency)}</strong>
-          <small>Deployable + next maturity</small>
-        </div>
-      </div>
-
-      <div className="capital-grid">
         <div className="projection-card">
           <span>Reserve Amount</span>
           <input
@@ -116,29 +131,28 @@ export default function CapitalPanel({
         </div>
 
         <div className="projection-card">
+          <span>Idle Cash</span>
+          <strong>{formatMoney(idleCash, currency)}</strong>
+          <small>Savings + Parking Cash after reserve</small>
+        </div>
+
+        {/* Row 2: Future Intelligence Layer */}
+        <div className="projection-card">
+          <span>With Upcoming FD</span>
+          <strong>{formatMoney(totalDeployableWithUpcoming, currency)}</strong>
+          <small>Deployable + next maturity</small>
+        </div>
+
+        <div className="projection-card">
           <span>Strongest Month</span>
           <strong>{strongestMonth?.month || "-"}</strong>
-          <small>
-            {formatMoney(getMonthAmount(strongestMonth), currency)}
-          </small>
+          <small>{formatMoney(getMonthAmount(strongestMonth), currency)}</small>
         </div>
 
         <div className="projection-card">
           <span>Weakest Month</span>
           <strong>{weakestMonth?.month || "-"}</strong>
           <small>{formatMoney(getMonthAmount(weakestMonth), currency)}</small>
-        </div>
-
-        <div className="projection-card">
-          <span>Idle Cash</span>
-          <strong>{formatMoney(idleCash, currency)}</strong>
-          <small>Savings + Parking Cash</small>
-        </div>
-
-        <div className="projection-card">
-          <span>Liquidity Buffer</span>
-          <strong>{formatMoney(liquidityBuffer, currency)}</strong>
-          <small>Reserve and flexible cash layer</small>
         </div>
 
         <div className="projection-card">
@@ -152,7 +166,6 @@ export default function CapitalPanel({
 
       <div className={`capital-signal ${signalClass}`}>
         <strong>Capital Intelligence Signal</strong>
-
         <p>
           {totalDeployableFunds > 20000
             ? `Excess idle capital detected: ${formatMoney(
@@ -176,7 +189,6 @@ export default function CapitalPanel({
       {healthReasons.length > 0 && (
         <div className="capital-signal stable">
           <strong>Capital Health Explanation</strong>
-
           {healthReasons.map((reason, index) => (
             <p key={index}>• {reason}</p>
           ))}
@@ -185,7 +197,6 @@ export default function CapitalPanel({
 
       <div className="capital-signal stable">
         <strong>Banker Intelligence Insight</strong>
-
         <p>
           {weakestMonth?.month && strongestMonth?.month
             ? `Current strongest maturity concentration is ${strongestMonth.month}, while weakest coverage is ${weakestMonth.month}. Future deployment should improve weaker maturity periods.`

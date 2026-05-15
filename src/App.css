@@ -506,10 +506,7 @@ button {
   gap: 14px;
 }
 
-.signal-card,
-.action-card,
-.mini-action-card,
-.top-signal-card,
+
 
 .action-item,
 .signal-item {
@@ -531,25 +528,19 @@ button {
   border-left-color: var(--green);
 }
 
-.signal-card h4,
-.action-card h4,
-.mini-action-card h4,
+
 .record-card h4,
 .alert-box h4,
-.projection-card h4,
-.top-signal-card h4, {
+.projection-card h4 {
   margin: 0 0 8px;
   font-size: 18px;
   color: var(--text);
 }
 
-.signal-card p,
-.action-card p,
-.mini-action-card p,
+
 .alert-sub,
 .projection-meta,
-.projection-note,
-.top-signal-card p,{
+.projection-note {
   margin: 0;
   color: var(--muted);
   line-height: 1.5;
@@ -1617,10 +1608,9 @@ body.theme-dark .empty-state-card {
 }
 
 /* Section cards */
-.dashboard-section-card,
-.home-panel,
-.analytics-panel,
- {
+  .dashboard-section-card,
+  .home-panel,
+  .analytics-panel {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 28px;
@@ -2287,51 +2277,11 @@ textarea:focus {
 
 
 
-.dashboard-hero,
-.dashboard-section {
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(180, 195, 220, 0.45);
-  border-radius: 28px;
-  padding: 28px;
-  margin-bottom: 24px;
-  box-shadow: 0 18px 40px rgba(20, 40, 80, 0.08);
-}
 
 
 
 
-.summary-card,
-.projection-card,
-.score-card,
-.hero-alert {
-  background: #ffffff;
-  border: 1px solid rgba(190, 205, 230, 0.7);
-  border-radius: 22px;
-  padding: 22px;
-  box-shadow: 0 10px 28px rgba(20, 40, 80, 0.06);
-}
 
-.summary-card span,
-.projection-card span,
-.score-card span,
-.hero-alert span,
-.eyebrow {
-  display: block;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #7181a3;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.summary-card strong,
-.projection-card strong,
-.score-card strong,
-.hero-alert strong {
-  font-size: 24px;
-  color: #071b45;
-}
 
 
 
@@ -2379,4 +2329,28 @@ input {
   }
 
 
+}
+
+/* =========================
+   V33.2 Home Blue Label Sync
+   Match More / Planner page
+========================= */
+
+.dashboard-page .eyebrow,
+.dashboard-page .card-kicker,
+.dashboard-page .panel-kicker,
+.dashboard-page .section-kicker,
+.dashboard-page .dashboard-kicker,
+.dashboard-page .section-header .eyebrow,
+.dashboard-page .summary-card span,
+.dashboard-page .capital-card span,
+.dashboard-page .metric-box span,
+.dashboard-page .dashboard-stat-card span,
+.dashboard-page .mini-stat-card span,
+.dashboard-page .projection-card span,
+.dashboard-page .execution-snapshot-card span {
+  color: #4568ff !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.1px !important;
+  text-transform: uppercase !important;
 }

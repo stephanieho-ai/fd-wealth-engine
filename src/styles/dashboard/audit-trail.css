@@ -78,3 +78,19 @@
   margin-top: 10px;
   margin-bottom: 8px;
 }
+
+.audit-trail {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.danger-chip {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border: none;
+}
+
+.danger-chip:hover {
+  background: rgba(239, 68, 68, 0.2);
+}

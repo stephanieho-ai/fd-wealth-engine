@@ -1,4 +1,5 @@
 import "../../styles/dashboard/execution-panel.css";
+import { useState } from "react";
 
   export default function ExecutionPanel({
   currency = "MYR",
@@ -7,6 +8,8 @@ import "../../styles/dashboard/execution-panel.css";
   onUndoExecution,
   onExecute,
 }) {
+  const [activeAction, setActiveAction] = useState("EXECUTE");
+
   const formatMoney = (value) =>
     `${currency} ${Number(value || 0).toLocaleString(undefined, {
       minimumFractionDigits: 0,
@@ -38,20 +41,34 @@ import "../../styles/dashboard/execution-panel.css";
       </div>
 
       <button
-        className="primary-button"
+        className={
+          activeAction === "EXECUTE"
+            ? "primary-button"
+            : "secondary-button"
+        }
         type="button"
-        onClick={onExecute}
+        onClick={() => {
+          setActiveAction("EXECUTE");
+          onExecute?.();
+        }}
       >
         Execute Suggested Deployment
       </button>
 
       <button
-        className="secondary-button"
-        type="button"
-        onClick={onUndoExecution}
-      >
-        Undo Last Execution
-      </button>
+      className={
+        activeAction === "UNDO"
+          ? "primary-button"
+          : "secondary-button"
+      }
+      type="button"
+      onClick={() => {
+        setActiveAction("UNDO");
+        onUndoExecution?.();
+      }}
+    >
+      Undo Last Execution
+    </button>
     </section>
   );
 }

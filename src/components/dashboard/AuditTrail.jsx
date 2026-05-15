@@ -1,5 +1,5 @@
 import "../../styles/dashboard/audit-trail.css";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const AUDIT_STORAGE_KEY = "fd_execution_history";
 
@@ -15,6 +15,18 @@ function formatMoney(value, currency = "MYR") {
 export default function AuditTrail() {
   const [filter, setFilter] = useState("ALL");
   const [showAll, setShowAll] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  useEffect(() => {
+  const handleAuditUpdated = () => {
+    setRefreshKey((key) => key + 1);
+  };
+
+  window.addEventListener("auditTrailUpdated", handleAuditUpdated);
+
+  return () => {
+    window.removeEventListener("auditTrailUpdated", handleAuditUpdated);
+  };
+}, [refreshKey]);
 
   const auditTrail = useMemo(() => {
     try {
@@ -28,7 +40,7 @@ export default function AuditTrail() {
       console.error("AuditTrail load failed:", error);
       return [];
     }
-  }, []);
+  }, [refreshKey]);
 
   const filteredAuditTrail = useMemo(() => {
     const today = new Date()
@@ -70,18 +82,34 @@ export default function AuditTrail() {
         </div>
       </div>
 
-      <div className="filter-row">
-        {["ALL", "EXECUTE", "UNDO", "TODAY"].map((item) => (
-          <button
-            key={item}
-            type="button"
-            className={filter === item ? "active" : ""}
-            onClick={() => setFilter(item)}
-          >
-            {item}
-          </button>
-        ))}
-      </div>
+<div className="filter-row">
+  {["ALL", "EXECUTE", "UNDO", "TODAY"].map((item) => (
+    <button
+      key={item}
+      type="button"
+      className={filter === item ? "active" : ""}
+      onClick={() => setFilter(item)}
+    >
+      {item}
+    </button>
+  ))}
+
+  <button
+    type="button"
+    className="danger-chip"
+    onClick={() => {
+      localStorage.removeItem(AUDIT_STORAGE_KEY);
+
+      setFilter("ALL");
+
+      window.dispatchEvent(
+        new Event("auditTrailUpdated")
+      );
+    }}
+  >
+    CLEAR
+  </button>
+</div>
 
       {!visibleAuditTrail.length ? (
         <div className="empty-state">

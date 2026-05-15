@@ -98,7 +98,9 @@ export default function MaturityAlerts({
           {maturityAlerts.map((record) => (
             <div
               key={record.id || record.generationId || record.maturityDate}
-              className="projection-card"
+              className={`projection-card ${
+                record.level === "Overdue" ? "overdue-card" : ""
+              }`}
             >
               <div>
                 <span>{record.level}</span>

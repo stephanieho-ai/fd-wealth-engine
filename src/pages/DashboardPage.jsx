@@ -171,7 +171,7 @@ function getCapitalHealthScore({
   onDeleteRecord,
 }) {
   const [reserveAmount, setReserveAmount] = useState(
-    toNumber(settings?.reserveAmount ?? 10000)
+    toNumber(settings?.reserveAmount ?? 0)
   );
 
   const [toastMessage, setToastMessage] = useState("");
@@ -203,6 +203,7 @@ function getCapitalHealthScore({
     [activeRecords]
   );
 
+
   const totalFixedDeposits = useMemo(
     () =>
       activeFDRecords.reduce(
@@ -211,6 +212,33 @@ function getCapitalHealthScore({
       ),
     [activeFDRecords]
   );
+
+    const totalSavings = useMemo(
+      () =>
+        activeRecords
+          .filter(
+            (record) => normalizeType(record) === "SAVINGS"
+          )
+          .reduce(
+            (sum, record) => sum + getAmount(record),
+            0
+          ),
+      [activeRecords]
+    );
+
+    const totalParkingCash = useMemo(
+      () =>
+        activeRecords
+          .filter(
+            (record) =>
+              normalizeType(record) === "PARKING_CASH"
+          )
+          .reduce(
+            (sum, record) => sum + getAmount(record),
+            0
+          ),
+      [activeRecords]
+    );
 
   const totalDeployableFunds = useMemo(
     () =>
@@ -344,6 +372,24 @@ function getCapitalHealthScore({
     return;
   }
 
+  let remainingAmount = idleCash;
+
+  const sourceBreakdown = deployableRecords.map((record) => {
+    if (remainingAmount <= 0) return null;
+
+    const availableAmount = getAmount(record);
+    const usedAmount = Math.min(availableAmount, remainingAmount);
+
+    remainingAmount -= usedAmount;
+
+    return {
+      id: record.id,
+      bank: record.bank,
+      recordType: normalizeType(record),
+      amount: usedAmount,
+    };
+  }).filter(Boolean);
+
   const executionRecord = {
     id: `AUTO-${Date.now()}`,
     bank: bestOffer?.bank || "Suggested FD",
@@ -361,6 +407,7 @@ function getCapitalHealthScore({
     status: "ACTIVE",
     tag: "AUTO_EXECUTED",
     recordType: "FD",
+    sourceBreakdown,
   };
 
   onAddRecord?.(executionRecord);
@@ -381,6 +428,10 @@ function getCapitalHealthScore({
   localStorage.setItem(
     "fd_execution_history",
     JSON.stringify([...existingAudit, auditEntry])
+  );
+
+  window.dispatchEvent(
+    new Event("auditTrailUpdated")
   );
 
   setToastMessage(
@@ -406,6 +457,20 @@ function getCapitalHealthScore({
 
   onDeleteRecord?.(latestAutoRecord.id);
 
+(latestAutoRecord.sourceBreakdown || []).forEach(
+  (source, index) => {
+    onAddRecord?.({
+      id: `RESTORE-${Date.now()}-${index}`,
+      bank: source.bank || "Recovered Capital",
+      principal: source.amount,
+      amount: source.amount,
+      status: "ACTIVE",
+      recordType: source.recordType,
+      note: `Restored from undo execution ${latestAutoRecord.id}`,
+    });
+  }
+);
+
   const auditEntry = {
     id: `AUDIT-${Date.now()}`,
     type: "UNDO",
@@ -422,6 +487,10 @@ function getCapitalHealthScore({
   localStorage.setItem(
     "fd_execution_history",
     JSON.stringify([...existingAudit, auditEntry])
+  );
+
+  window.dispatchEvent(
+    new Event("auditTrailUpdated")
   );
 
   setToastMessage(
@@ -498,6 +567,8 @@ function getCapitalHealthScore({
         formatMoney={formatMoney}
         totalActivePortfolio={totalActivePortfolio}
         totalFixedDeposits={totalFixedDeposits}
+        totalSavings={totalSavings}
+        totalParkingCash={totalParkingCash}
         totalDeployableFunds={totalDeployableFunds}
         totalDeployableWithUpcoming={totalDeployableWithUpcoming}
         capitalSignal={capitalSignal}
@@ -508,7 +579,9 @@ function getCapitalHealthScore({
         liquidityBuffer={liquidityBuffer}
       />
 
+      {/* Dashboard Main Composition Layer */}
       <div className="dashboard-main-grid">
+   {/* Left Intelligence Column */}   
   <div className="dashboard-main-side">
     <AdvisorPanel
       currency={currency}
@@ -531,7 +604,7 @@ function getCapitalHealthScore({
     onUndoExecution={handleUndoExecution}
   />
   </div>
-
+  {/* Right Governance Column */}
   <AuditTrail />
 </div>
 </main>
